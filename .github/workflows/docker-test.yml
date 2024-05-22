@@ -1,0 +1,38 @@
+name: "Test: Create New Django Project"
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_NAME: init_test_github
+  PROJECT_IMAGE_NAME: "ghcr.io/asim3/${{ github.event.repository.name }}"
+
+
+jobs:
+  docker_test:
+    runs-on: ubuntu-latest
+    name: Test on Docker
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create New Django Project
+        run: if [ -x ./setup/set-new-django-project.bash ]; then echo ${PROJECT_NAME} | make init; fi;
+
+      - name: Copy Tests Env File
+        run: cp ./${PROJECT_NAME}/.env.sample ./${PROJECT_NAME}/.env
+
+      - name: Build Docker
+        run: >
+          docker image build --no-cache
+          -t ${PROJECT_IMAGE_NAME}:tests
+          -f ./deploy/Dockerfile . ;
+
+      - name: Run All Django Tests
+        run: >
+          docker container run --rm
+          -e DJANGO_SETTINGS_MODULE=${PROJECT_NAME}.settings.docker_testing
+          -e DATABASE_URL=sqlite:///db.sqlite3
+          ${PROJECT_IMAGE_NAME}:tests 'python3 manage.py test'
+
