@@ -1,15 +1,15 @@
 version: "3.8"
 services:
-  postgresql-stag:
+  postgresql-prod:
     image: postgres:16.2-alpine3.19
     restart: unless-stopped
     environment:
       TZ: Asia/Riyadh
-      POSTGRES_DB: my_project_name_db_v1
-      POSTGRES_USER: my_project_name_user_v1
+      POSTGRES_DB: uuuuuuuuuuuuuuuuuuu_db_v1
+      POSTGRES_USER: uuuuuuuuuuuuuuuuuuu_user_v1
       POSTGRES_PASSWORD_FILE: "/root/postgres_password"
     secrets:
-      - source: secret_my_project_name_stag_sql_password_v1
+      - source: secret_uuuuuuuuuuuuuuuuuuu_prod_sql_password_v1
         target: /root/postgres_password
         uid: "1"
         gid: "1"
@@ -41,10 +41,10 @@ services:
       replicas: 2
       labels:
         traefik.enable: "true"
-        traefik.http.routers.my_project_name-stag-static-app.rule: Host(`my_project_name.static.asimt.sa`)
-        traefik.http.routers.my_project_name-stag-static-app.tls: "true"
-        traefik.http.routers.my_project_name-stag-static-app.tls.certresolver: prodResolver
-        traefik.http.services.my_project_name-stag-static-svc.loadbalancer.server.port: 80
+        traefik.http.routers.uuuuuuuuuuuuuuuuuuu-prod-static-app.rule: Host(`static.uuuuuuuuuuuuuuuuuuu.sa`)
+        traefik.http.routers.uuuuuuuuuuuuuuuuuuu-prod-static-app.tls: "true"
+        traefik.http.routers.uuuuuuuuuuuuuuuuuuu-prod-static-app.tls.certresolver: prodResolver
+        traefik.http.services.uuuuuuuuuuuuuuuuuuu-prod-static-svc.loadbalancer.server.port: 80
       resources:
         reservations:
           memory: 128M
@@ -58,7 +58,7 @@ services:
       - main-public
 
   app-migrate:
-    image: ghcr.io/asim3/my_project_name:${PROJECT_IMAGE_TAG}
+    image: ghcr.io/asim3/uuuuuuuuuuuuuuuuuuu:${PROJECT_IMAGE_TAG}
     entrypoint:
       - "/bin/sh"
       - "-c"
@@ -69,9 +69,9 @@ services:
       - setup-volume
     environment:
       TZ: Asia/Riyadh
-      DJANGO_SETTINGS_MODULE: "my_project_name.settings.docker_staging"
+      DJANGO_SETTINGS_MODULE: "uuuuuuuuuuuuuuuuuuu.settings.docker_production"
     secrets:
-      - source: secret_my_project_name_stag_env_v1
+      - source: secret_uuuuuuuuuuuuuuuuuuu_prod_env_v1
         target: /home/d_user/web/.env
         uid: "1000"
         gid: "1000"
@@ -83,12 +83,12 @@ services:
       - main-public
 
   app:
-    image: ghcr.io/asim3/my_project_name:${PROJECT_IMAGE_TAG}
+    image: ghcr.io/asim3/uuuuuuuuuuuuuuuuuuu:${PROJECT_IMAGE_TAG}
     environment:
       TZ: Asia/Riyadh
-      DJANGO_SETTINGS_MODULE: "my_project_name.settings.docker_staging"
+      DJANGO_SETTINGS_MODULE: "uuuuuuuuuuuuuuuuuuu.settings.docker_production"
     secrets:
-      - source: secret_my_project_name_stag_env_v1
+      - source: secret_uuuuuuuuuuuuuuuuuuu_prod_env_v1
         target: /home/d_user/web/.env
         uid: "1000"
         gid: "1000"
@@ -101,10 +101,10 @@ services:
       replicas: 1
       labels:
         traefik.enable: "true"
-        traefik.http.routers.my_project_name-stag-app.rule: Host(`my_project_name.asimt.sa`)
-        traefik.http.routers.my_project_name-stag-app.tls: "true"
-        traefik.http.routers.my_project_name-stag-app.tls.certresolver: prodResolver
-        traefik.http.services.my_project_name-stag-svc.loadbalancer.server.port: 8000
+        traefik.http.routers.uuuuuuuuuuuuuuuuuuu-prod-app.rule: Host(`uuuuuuuuuuuuuuuuuuu.sa`)
+        traefik.http.routers.uuuuuuuuuuuuuuuuuuu-prod-app.tls: "true"
+        traefik.http.routers.uuuuuuuuuuuuuuuuuuu-prod-app.tls.certresolver: prodResolver
+        traefik.http.services.uuuuuuuuuuuuuuuuuuu-prod-svc.loadbalancer.server.port: 8000
         # https://doc.traefik.io/traefik/routing/providers/docker/
       resources:
         reservations:
@@ -121,11 +121,11 @@ services:
       - main-public
 
 
-# docker secret create secret_my_project_name_stag_env_v1 /home/asim/secrets/my_project_name_stag_env
+# docker secret create secret_uuuuuuuuuuuuuuuuuuu_prod_env_v1 /home/asim/secrets/uuuuuuuuuuuuuuuuuuu_prod_env
 secrets:
-  secret_my_project_name_stag_env_v1:
+  secret_uuuuuuuuuuuuuuuuuuu_prod_env_v1:
     external: true
-  secret_my_project_name_stag_sql_password_v1:
+  secret_uuuuuuuuuuuuuuuuuuu_prod_sql_password_v1:
     external: true
 
 volumes:

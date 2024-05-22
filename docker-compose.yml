@@ -4,17 +4,17 @@ services:
   postgresql:
     image: postgres
     restart: unless-stopped
-    container_name: my_project_name-db
+    container_name: uuuuuuuuuuuuuuuuuuu-db
     environment:
       - POSTGRES_DB=db_pg
       - POSTGRES_USER=user_pg
       - POSTGRES_PASSWORD=pass_pg
     volumes:
-      - my_project_name-db:/var/lib/postgresql/data
+      - uuuuuuuuuuuuuuuuuuu-db:/var/lib/postgresql/data
  
   app-migrate:
     build: .
-    container_name: my_project_name-migrate
+    container_name: uuuuuuuuuuuuuuuuuuu-migrate
     entrypoint:
       - "/bin/sh"
       - "-c"
@@ -22,21 +22,21 @@ services:
     depends_on:
       - postgresql
     environment:
-      - DJANGO_SETTINGS_MODULE=my_project_name.settings.docker_dev
+      - DJANGO_SETTINGS_MODULE=uuuuuuuuuuuuuuuuuuu.settings.docker_dev
     volumes:
-      - ./my_project_name:/home/d_user/web
+      - ./uuuuuuuuuuuuuuuuuuu:/home/d_user/web
  
   app:
     build: .
-    container_name: my_project_name
+    container_name: uuuuuuuuuuuuuuuuuuu
     ports:
       - "8000:8000"
     depends_on:
       - app-migrate
     environment:
-      - DJANGO_SETTINGS_MODULE=my_project_name.settings.docker_dev
+      - DJANGO_SETTINGS_MODULE=uuuuuuuuuuuuuuuuuuu.settings.docker_dev
     volumes:
-      - ./my_project_name:/home/d_user/web
+      - ./uuuuuuuuuuuuuuuuuuu:/home/d_user/web
 
 volumes:
-  my_project_name-db:
+  uuuuuuuuuuuuuuuuuuu-db:

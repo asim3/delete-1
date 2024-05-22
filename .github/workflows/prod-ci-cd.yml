@@ -6,7 +6,7 @@ on:
       - prod/**
 
 env:
-  PROJECT_NAME: my_project_name
+  PROJECT_NAME: uuuuuuuuuuuuuuuuuuu
   PROJECT_IMAGE_NAME: "ghcr.io/asim3/${{ github.event.repository.name }}"
 
 

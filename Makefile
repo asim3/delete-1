@@ -1,6 +1,6 @@
 SHELL=/bin/bash
 
-PROJECT_NAME=my_project_name
+PROJECT_NAME=uuuuuuuuuuuuuuuuuuu
 
 DOCKER_RUN=docker compose run app
 
@@ -18,11 +18,11 @@ run:
 
 check:
 	${DOCKER_RUN} "python3 manage.py check --deploy \
-	--settings ${PROJECT_NAME}.settings.production \
-	--fail-level WARNING \
+	--settings ${PROJECT_NAME}.settings.docker_production \
+	--fail-level ERROR \
 	&& echo 'production settings looks good'"
-	${DOCKER_RUN} "mkdir -p ./media/backup"
-	- ${DOCKER_RUN} "cp ./db.sqlite3 ./media/backup/db_$$(date +'%Y-%m-%d_%H-%M-%S').sqlite3"
+	# ${DOCKER_RUN} "mkdir -p ./media/backup"
+	# ${DOCKER_RUN} "cp ./db.sqlite3 ./media/backup/db_$$(date +'%Y-%m-%d_%H-%M-%S').sqlite3"
 
 
 # make test args=my_app
@@ -45,7 +45,7 @@ tra:
 	${DOCKER_RUN} "python3 manage.py compilemessages"
 
 
-make_migrations:
+migrations:
 	${DOCKER_RUN} "python3 manage.py makemigrations --dry-run"
 	${DOCKER_RUN} "python3 manage.py makemigrations"
 	- ${DOCKER_RUN} "python3 manage.py generateschema --file ./templates/api/openapi-schema.yaml"

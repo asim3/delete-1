@@ -8,8 +8,8 @@ COPY ./requirements.txt /requirements.txt
 
 RUN pip wheel --wheel-dir=/root/wheels -r /requirements.txt
 
-LABEL org.opencontainers.image.source=https://github.com/asim3/my_project_name
-LABEL org.opencontainers.image.description="Django: my_project_name"
+LABEL org.opencontainers.image.source=https://github.com/asim3/uuuuuuuuuuuuuuuuuuu
+LABEL org.opencontainers.image.description="Django: uuuuuuuuuuuuuuuuuuu"
 
 
 
@@ -29,7 +29,7 @@ COPY --from=builder /requirements.txt $APP_HOME/requirements.txt
 
 RUN pip install --no-index --find-links=/root/wheels -r $APP_HOME/requirements.txt
 
-COPY --chown=d_user:d_user --chmod=550 ./my_project_name $APP_HOME
+COPY --chown=d_user:d_user --chmod=550 ./uuuuuuuuuuuuuuuuuuu $APP_HOME
 
 WORKDIR $APP_HOME
 
